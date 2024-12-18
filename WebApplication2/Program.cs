@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Movies.Services;
 using Movies.Repository;
+using Movies.WebAPI.Middleware;
 
 namespace WebApplication2
 {
@@ -50,8 +51,9 @@ namespace WebApplication2
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseMiddleware<ApiKeyMiddleware>();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
