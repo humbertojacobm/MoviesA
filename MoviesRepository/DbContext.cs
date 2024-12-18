@@ -19,6 +19,15 @@ namespace Movies.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Movie>()
+            .HasMany(m => m.Actors)
+            .WithMany(a => a.Movies)
+            .UsingEntity(j => j.HasData(
+                new { MoviesId = 1, ActorsId = 1 },
+                new { MoviesId = 2, ActorsId = 2 }, 
+                new { MoviesId = 3, ActorsId = 3 }, 
+                new { MoviesId = 1, ActorsId = 3 }  
+            ));
             // Seed Dummy Data
             modelBuilder.Entity<Movie>().HasData(
                 new Movie { Id = 1, Title = "Inception", Genre = "Sci-Fi", ReleaseYear = 2010 },

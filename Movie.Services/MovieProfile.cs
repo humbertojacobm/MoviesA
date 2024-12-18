@@ -13,11 +13,16 @@ namespace Movies.Services
     {
         public MovieProfile()
         {
-            CreateMap<DTO.Movie, Model.Movie>().ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
+
+            CreateMap<Model.Movie, DTO.Movie>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Title))
                                          .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
                                          .ForMember(dest => dest.ReleaseYear, opt => opt.MapFrom(src => src.ReleaseYear))
+                                         .ForMember(dest => dest.ActorNames, opt => opt.MapFrom(src => src.Actors.Select(a => a.Name)))
                                          .ReverseMap();
-            CreateMap<DTO.Actor, Model.Actor>().ReverseMap();
+
+            CreateMap<Model.Actor, DTO.Actor>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                                         .ForMember(dest => dest.MovieTitles, opt => opt.MapFrom(src => src.Movies.Select(m => m.Title)))
+                                         .ReverseMap();
         }
     }
 }
