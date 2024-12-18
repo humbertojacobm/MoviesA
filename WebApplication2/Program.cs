@@ -14,26 +14,19 @@ namespace WebApplication2
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
 
-            // Register FluentValidation services
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
 
-            // Register all validators in the assembly
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Add ApplicationDbContext with In-Memory Database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("InMemoryDb"));
 
-            // Add Repositories and Services
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<IActorService, ActorService>();
@@ -42,7 +35,6 @@ namespace WebApplication2
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
-            // Add AutoMapper
             builder.Services.AddAutoMapper(typeof(MovieProfile));
 
             var app = builder.Build();
@@ -50,10 +42,9 @@ namespace WebApplication2
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.EnsureCreated(); // Ensures the database and schema are created
+                dbContext.Database.EnsureCreated();
             }
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

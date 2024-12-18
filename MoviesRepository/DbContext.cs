@@ -30,7 +30,7 @@ namespace Movies.Repository
                 new { MoviesId = 3, ActorsId = 3 }, 
                 new { MoviesId = 1, ActorsId = 3 }  
             ));
-            // Seed Dummy Data
+            
             modelBuilder.Entity<Movie>().HasData(
                 new Movie { Id = 1, Title = "Inception", Genre = "Sci-Fi", ReleaseYear = 2010 },
                 new Movie { Id = 2, Title = "The Dark Knight", Genre = "Action", ReleaseYear = 2008 },
