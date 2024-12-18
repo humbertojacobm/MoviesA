@@ -53,5 +53,12 @@ namespace Movies.WebAPI.Controllers
             await _actorService.DeleteActorAsync(id);
             return NoContent();
         }
+
+        [HttpGet("by-movie/{movieId}")]
+        public async Task<IActionResult> GetActorsByMovieId(int movieId)
+        {
+            var actors = await _actorService.GetActorsByMovieIdAsync(movieId);
+            return Ok(actors);
+        }
     }
 }
