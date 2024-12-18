@@ -61,5 +61,12 @@ namespace Movies.WebAPI.Controllers
             await _movieService.DeleteMovieAsync(id);
             return NoContent();
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchMoviesByPartialName([FromQuery] string partialName)
+        {
+            var movies = await _movieService.SearchMoviesByPartialNameAsync(partialName);
+            return Ok(movies);
+        }
     }
 }

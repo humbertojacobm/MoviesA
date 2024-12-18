@@ -59,5 +59,10 @@ namespace Movies.Services
             var movies = await _movieRepository.GetMoviesByActorIdAsync(actorId);
             return _mapper.Map<IEnumerable<DTO.Movie>>(movies);
         }
+        public async Task<IEnumerable<DTO.Movie>> SearchMoviesByPartialNameAsync(string partialName)
+        {
+            var movies = await _movieRepository.SearchMoviesByPartialNameAsync(partialName);
+            return _mapper.Map<IEnumerable<DTO.Movie>>(movies);
+        }
     }
 }

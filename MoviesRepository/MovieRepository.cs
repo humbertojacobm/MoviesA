@@ -23,5 +23,11 @@ namespace Movies.Repository
                                  .Where(m => m.Actors.Any(a => a.Id == actorId))
                                  .ToListAsync();
         }
+        public async Task<IEnumerable<Movie>> SearchMoviesByPartialNameAsync(string partialName)
+        {
+            return await _context.Movies
+                                 .Where(m => m.Title.Contains(partialName))
+                                 .ToListAsync();
+        }
     }
 }

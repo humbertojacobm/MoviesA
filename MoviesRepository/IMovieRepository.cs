@@ -10,5 +10,6 @@ namespace Movies.Repository
     public interface IMovieRepository
     {
         Task<IEnumerable<Movie>> GetMoviesByActorIdAsync(int actorId);
+        Task<IEnumerable<Movie>> SearchMoviesByPartialNameAsync(string partialName);
     }
 }
