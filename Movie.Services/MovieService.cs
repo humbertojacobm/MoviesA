@@ -1,5 +1,5 @@
-﻿using MoviesRepository;
-using Model = MoviesEntities;
+﻿using Movies.Repository;
+using Model = Movies.Model;
 using DTO = Movies.DTOs;
 using AutoMapper;
 

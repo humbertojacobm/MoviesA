@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Movie.Services;
-using MoviesRepository;
+using Movies.Repository;
 
 namespace WebApplication2
 {

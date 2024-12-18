@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO = Movies.DTOs;
-using Model = MoviesEntities;
+using Model = Movies.Model;
 
 namespace Movie.Services
 {

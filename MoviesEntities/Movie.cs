@@ -1,4 +1,4 @@
-﻿namespace MoviesEntities
+﻿namespace Movies.Model
 {
     public class Movie
     {
