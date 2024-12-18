@@ -17,7 +17,6 @@ namespace WebApplication2
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(5000); // HTTP
-                options.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // HTTPS
             });
 
             builder.Services.AddControllers();
@@ -43,6 +42,17 @@ namespace WebApplication2
 
             builder.Services.AddAutoMapper(typeof(MovieProfile));
 
+            // Add CORS services
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
@@ -57,7 +67,9 @@ namespace WebApplication2
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors("AllowAll");
+
+            //app.UseHttpsRedirection();
 
             app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
