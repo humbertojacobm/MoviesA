@@ -29,12 +29,21 @@ namespace Movies.Services
 
         public async Task<DTO.Movie> GetMovieByIdAsync(int id)
         {
+            if (id <= 0)
+                throw new ArgumentException("Invalid movie ID.");
+
             var movie = await _repository.GetByIdAsync(id);
+            if (movie == null)
+                throw new KeyNotFoundException("Movie not found.");
+
             return _mapper.Map<DTO.Movie>(movie);
         }
 
         public async Task AddMovieAsync(DTO.Movie movieDto)
         {
+            if (string.IsNullOrWhiteSpace(movieDto.Name))
+                throw new ArgumentException("Movie title cannot be empty.");
+
             var movie = _mapper.Map<Model.Movie>(movieDto);
             await _repository.AddAsync(movie);
         }

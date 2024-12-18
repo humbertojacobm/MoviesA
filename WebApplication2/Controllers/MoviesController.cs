@@ -26,12 +26,23 @@ namespace Movies.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovieById(int id)
         {
-            var movie = await _movieService.GetMovieByIdAsync(id);
-            if (movie == null)
+            try
             {
-                return NotFound();
+                var movie = await _movieService.GetMovieByIdAsync(id);
+                return Ok(movie);
             }
-            return Ok(movie);
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
         }
 
         [HttpGet("by-actor/{actorId}")]
@@ -44,8 +55,20 @@ namespace Movies.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMovie([FromBody] DTO.Movie movieDto)
         {
-            await _movieService.AddMovieAsync(movieDto);
-            return CreatedAtAction(nameof(GetMovieById), new { id = movieDto.ReleaseYear }, movieDto);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _movieService.AddMovieAsync(movieDto);
+                return CreatedAtAction(nameof(GetMovieById), new { id = movieDto.Name }, movieDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]

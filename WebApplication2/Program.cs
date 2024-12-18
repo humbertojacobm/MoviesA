@@ -54,6 +54,7 @@ namespace WebApplication2
             app.UseHttpsRedirection();
 
             app.UseMiddleware<ApiKeyMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseAuthorization();
 
