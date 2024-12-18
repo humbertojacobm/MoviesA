@@ -26,6 +26,7 @@ namespace WebApplication2
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<IActorService, ActorService>();
             builder.Services.AddScoped<IActorRepository, ActorRepository>();
+            builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
             // Add AutoMapper
             builder.Services.AddAutoMapper(typeof(MovieProfile));

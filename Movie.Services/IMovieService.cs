@@ -14,5 +14,6 @@ namespace Movies.Services
         Task AddMovieAsync(DTO.Movie movieDto);
         Task UpdateMovieAsync(int id, DTO.Movie movieDto);
         Task DeleteMovieAsync(int id);
+        Task<IEnumerable<DTO.Movie>> GetMoviesByActorIdAsync(int actorId);
     }
 }

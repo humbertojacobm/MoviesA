@@ -34,6 +34,13 @@ namespace Movies.WebAPI.Controllers
             return Ok(movie);
         }
 
+        [HttpGet("by-actor/{actorId}")]
+        public async Task<IActionResult> GetMoviesByActorId(int actorId)
+        {
+            var movies = await _movieService.GetMoviesByActorIdAsync(actorId);
+            return Ok(movies);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddMovie([FromBody] DTO.Movie movieDto)
         {

@@ -8,11 +8,16 @@ namespace Movies.Services
     public class MovieService : IMovieService
     {
         private readonly IRepository<Model.Movie> _repository;
+        private readonly IMovieRepository _movieRepository;
         private readonly IMapper _mapper;
 
-        public MovieService(IRepository<Model.Movie> repository, IMapper mapper)
+        public MovieService(
+            IRepository<Model.Movie> repository,
+            IMovieRepository movieRepository,
+            IMapper mapper)
         {
             _repository = repository;
+            _movieRepository = movieRepository;
             _mapper = mapper;
         }
 
@@ -47,6 +52,12 @@ namespace Movies.Services
         public async Task DeleteMovieAsync(int id)
         {
             await _repository.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<DTO.Movie>> GetMoviesByActorIdAsync(int actorId)
+        {
+            var movies = await _movieRepository.GetMoviesByActorIdAsync(actorId);
+            return _mapper.Map<IEnumerable<DTO.Movie>>(movies);
         }
     }
 }
