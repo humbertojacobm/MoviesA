@@ -24,6 +24,12 @@ namespace Movies.Repository
                 new Movie { Id = 2, Title = "The Dark Knight", Genre = "Action", ReleaseYear = 2008 },
                 new Movie { Id = 3, Title = "Interstellar", Genre = "Sci-Fi", ReleaseYear = 2014 }
             );
+
+            modelBuilder.Entity<Actor>().HasData(
+                new Actor { Id = 1, Name = "Leonardo DiCaprio" },
+                new Actor { Id = 2, Name = "Christian Bale" },
+                new Actor { Id = 3, Name = "Anne Hathaway" }
+            );
         }
     }
 }

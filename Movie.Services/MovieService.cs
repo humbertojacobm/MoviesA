@@ -3,7 +3,7 @@ using Model = Movies.Model;
 using DTO = Movies.DTOs;
 using AutoMapper;
 
-namespace Movie.Services
+namespace Movies.Services
 {
     public class MovieService : IMovieService
     {

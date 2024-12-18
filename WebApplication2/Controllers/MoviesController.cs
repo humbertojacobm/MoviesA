@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Movie.Services;
+using Movies.Services;
 using DTO = Movies.DTOs;
 
 namespace Movies.WebAPI.Controllers

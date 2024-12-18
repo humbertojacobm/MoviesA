@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 using DTO = Movies.DTOs;
 using Model = Movies.Model;
 
-namespace Movie.Services
+namespace Movies.Services
 {
     public class MovieProfile : Profile
     {
         public MovieProfile()
         {
-            CreateMap<DTO.Movie, Model.Movie>().ReverseMap();
+            CreateMap<DTO.Movie, Model.Movie>().ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
+                                         .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
+                                         .ForMember(dest => dest.ReleaseYear, opt => opt.MapFrom(src => src.ReleaseYear))
+                                         .ReverseMap();
+            CreateMap<DTO.Actor, Model.Actor>().ReverseMap();
         }
     }
 }

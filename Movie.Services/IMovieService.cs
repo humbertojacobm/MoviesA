@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO = Movies.DTOs;
 
-namespace Movie.Services
+namespace Movies.Services
 {
     public interface IMovieService
     {
