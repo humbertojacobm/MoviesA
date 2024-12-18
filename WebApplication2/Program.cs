@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Movies.Services;
 using Movies.Repository;
 using Movies.WebAPI.Middleware;
+using FluentValidation.AspNetCore;
+using Movies.WebAPI.Validator;
+using FluentValidation;
 
 namespace WebApplication2
 {
@@ -14,6 +17,14 @@ namespace WebApplication2
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            // Register FluentValidation services
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddFluentValidationClientsideAdapters();
+
+            // Register all validators in the assembly
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
