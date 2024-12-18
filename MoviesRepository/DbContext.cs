@@ -13,6 +13,8 @@ namespace Movies.Repository
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor> Actors { get; set; }
 
+        public DbSet<Rating> Ratings { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -39,6 +41,12 @@ namespace Movies.Repository
                 new Actor { Id = 1, Name = "Leonardo DiCaprio" },
                 new Actor { Id = 2, Name = "Christian Bale" },
                 new Actor { Id = 3, Name = "Anne Hathaway" }
+            );
+
+            modelBuilder.Entity<Rating>().HasData(
+                new Rating { Id = 1, MovieId = 1, RatingValue = 5, VotersFullName = "John Doe" },
+                new Rating { Id = 2, MovieId = 1, RatingValue = 4, VotersFullName = "Jane Smith" },
+                new Rating { Id = 3, MovieId = 2, RatingValue = 5, VotersFullName = "Alice Brown" }
             );
         }
     }

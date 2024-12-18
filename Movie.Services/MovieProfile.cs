@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Movies.DTOs;
+using Movies.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,7 @@ namespace Movies.Services
             CreateMap<Model.Actor, DTO.Actor>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                                          .ForMember(dest => dest.MovieTitles, opt => opt.MapFrom(src => src.Movies.Select(m => m.Title)))
                                          .ReverseMap();
+            CreateMap<Rating, RatingDTO>().ReverseMap();
         }
     }
 }
