@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Movie.Services;
-using MoviesRepository;
+using Movies.Services;
+using Movies.Repository;
+using Movies.WebAPI.Middleware;
+using FluentValidation.AspNetCore;
+using Movies.WebAPI.Validator;
+using FluentValidation;
 
 namespace WebApplication2
 {
@@ -10,28 +14,37 @@ namespace WebApplication2
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddFluentValidationClientsideAdapters();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Add ApplicationDbContext with In-Memory Database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("InMemoryDb"));
 
-            // Add Repositories and Services
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IMovieService, MovieService>();
+            builder.Services.AddScoped<IActorService, ActorService>();
+            builder.Services.AddScoped<IRatingService, RatingService>();
+            builder.Services.AddScoped<IActorRepository, ActorRepository>();
+            builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+            builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
-            // Add AutoMapper
             builder.Services.AddAutoMapper(typeof(MovieProfile));
-
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.EnsureCreated();
+            }
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -40,8 +53,10 @@ namespace WebApplication2
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseMiddleware<ApiKeyMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

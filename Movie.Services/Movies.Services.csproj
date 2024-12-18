@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Movies.DTOs\Movies.DTOs.csproj" />
-    <ProjectReference Include="..\MoviesEntities\MoviesEntities.csproj" />
-    <ProjectReference Include="..\MoviesRepository\MoviesRepository.csproj" />
+    <ProjectReference Include="..\MoviesEntities\Movies.Model.csproj" />
+    <ProjectReference Include="..\MoviesRepository\Movies.Repository.csproj" />
   </ItemGroup>
 
 </Project>
