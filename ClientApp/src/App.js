@@ -9,6 +9,7 @@ import GameContainer from "./containers/GameContainer/GameContainer";
 import RecordsContainer from "./containers/RecordsContainer/RecordsContainer";
 import { ShipAlert } from "./components";
 import { GlobalContextProvider } from "./GlobalContext";
+import MovieContainer from "./containers/MovieContainer/MovieContainer";
 import "./App.css";
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
                 Records
               </Link>
             </Nav.Item>
+            <Nav.Item as="li">
+              <Link to="/movies" className="nav-link">
+                Movies
+              </Link>
+            </Nav.Item>
           </Nav>
           <Row>
             <Col>
@@ -36,6 +42,7 @@ function App() {
                   element={<GameContainer />}
                 />
                 <Route path="/records/" element={<RecordsContainer />} />
+                <Route path="/movies" element={<MovieContainer />} />
                 <Route path="/" element={<SettingContainer />} />
               </Routes>
             </Col>
