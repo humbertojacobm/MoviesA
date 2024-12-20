@@ -4,3 +4,4 @@ export * from "./Game/NotificationSection";
 export * from "./Game/ActionSection";
 export * from "./ShipConfirmation/ShipConfirmation";
 export * from "./Movie/MovieList";
+export * from "./Actor/ActorList";

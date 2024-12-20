@@ -3,17 +3,15 @@ import Table from "react-bootstrap/Table";
 import PropTypes from "prop-types";
 
 const propTypes = {
-  movies: PropTypes.arrayOf(
+  actors: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      releaseYear: PropTypes.number.isRequired,
+      Name: PropTypes.string.isRequired,
     })
   ).isRequired,
 };
 
-const MovieList = ({ movies }) => {
+const ActorList = ({ actors }) => {
   return (
     <div className="mt-4">
       <Table striped bordered hover responsive>
@@ -26,12 +24,10 @@ const MovieList = ({ movies }) => {
           </tr>
         </thead>
         <tbody>
-          {movies.map((movie) => (
-            <tr key={movie.id}>
-              <td>{movie.id}</td>
-              <td>{movie.name}</td>
-              <td>{movie.genre}</td>
-              <td>{movie.releaseYear}</td>
+          {actors.map((actor) => (
+            <tr key={actor.id}>
+              <td>{actor.id}</td>
+              <td>{actor.Name}</td>
             </tr>
           ))}
         </tbody>
@@ -40,6 +36,6 @@ const MovieList = ({ movies }) => {
   );
 };
 
-MovieList.propTypes = propTypes;
+ActorList.propTypes = propTypes;
 
-export { MovieList };
+export { ActorList };
