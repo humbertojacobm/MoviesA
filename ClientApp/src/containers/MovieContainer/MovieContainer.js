@@ -22,10 +22,26 @@ const MovieContainer = () => {
     loadMovies();
   }, []);
 
+  const handleAddMovie = () => {
+    // Logic to add a new movie
+    const newMovie = {
+      id: movies.length + 1,
+      name: "New Movie",
+      genre: "Genre",
+      releaseYear: new Date().getFullYear(),
+    };
+    setMovies([...movies, newMovie]);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  return <MovieList movies={movies} />;
+  return (
+    <div>
+      <button onClick={handleAddMovie}>Add Movie</button>
+      <MovieList movies={movies} />
+    </div>
+  );
 };
 
 export default MovieContainer;
