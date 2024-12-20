@@ -10,6 +10,7 @@ import RecordsContainer from "./containers/RecordsContainer/RecordsContainer";
 import { ShipAlert } from "./components";
 import { GlobalContextProvider } from "./GlobalContext";
 import MovieContainer from "./containers/MovieContainer/MovieContainer";
+import ActorContainer from "./containers/ActorsContainer/ActorContainer";
 import "./App.css";
 
 function App() {
@@ -33,6 +34,11 @@ function App() {
                 Movies
               </Link>
             </Nav.Item>
+            <Nav.Item as="li">
+              <Link to="/actors" className="nav-link">
+                Actors
+              </Link>
+            </Nav.Item>
           </Nav>
           <Row>
             <Col>
@@ -43,6 +49,7 @@ function App() {
                 />
                 <Route path="/records/" element={<RecordsContainer />} />
                 <Route path="/movies" element={<MovieContainer />} />
+                <Route path="/actors" element={<ActorContainer />} />
                 <Route path="/" element={<SettingContainer />} />
               </Routes>
             </Col>

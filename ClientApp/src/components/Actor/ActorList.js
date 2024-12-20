@@ -19,15 +19,13 @@ const ActorList = ({ actors }) => {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Genre</th>
-            <th>Release Year</th>
           </tr>
         </thead>
         <tbody>
           {actors.map((actor) => (
             <tr key={actor.id}>
               <td>{actor.id}</td>
-              <td>{actor.Name}</td>
+              <td>{actor.name}</td>
             </tr>
           ))}
         </tbody>
