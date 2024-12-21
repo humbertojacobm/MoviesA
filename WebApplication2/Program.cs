@@ -14,10 +14,10 @@ namespace WebApplication2
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.WebHost.ConfigureKestrel(options =>
-            {
-                options.ListenAnyIP(5000); // HTTP
-            });
+            //builder.WebHost.ConfigureKestrel(options =>
+            //{
+            //    options.ListenAnyIP(5000); // HTTP
+            //});
 
             builder.Services.AddControllers();
 

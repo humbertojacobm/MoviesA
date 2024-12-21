@@ -22,6 +22,10 @@ namespace Movies.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>()
+                .Property(m => m.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Movie>()
             .HasMany(m => m.Actors)
             .WithMany(a => a.Movies)
             .UsingEntity(j => j.HasData(
