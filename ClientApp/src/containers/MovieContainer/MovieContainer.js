@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MovieList } from "../../components";
-import { fetchMovies } from "../../apis/moviesApi";
+import { fetchMovies, createMovie } from "../../apis/moviesApi";
 import { Button, Modal, Form } from "react-bootstrap";
 
 const MovieContainer = () => {
@@ -31,19 +31,13 @@ const MovieContainer = () => {
 
   const handleAddMovie = async () => {
     try {
-      const response = await fetch("/api/movies", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newMovie),
-      });
+      const nextId =
+        movies.length > 0
+          ? Math.max(...movies.map((movie) => movie.id)) + 1
+          : 1;
+      const movieToCreate = { ...newMovie, id: nextId };
 
-      if (!response.ok) {
-        throw new Error("Failed to create movie");
-      }
-
-      const createdMovie = await response.json();
+      const createdMovie = await createMovie(movieToCreate);
       setMovies([...movies, createdMovie]);
       setShowModal(false);
     } catch (err) {
