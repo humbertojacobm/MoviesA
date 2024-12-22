@@ -13,6 +13,7 @@ const MovieContainer = () => {
     genre: "",
     releaseYear: new Date().getFullYear(),
   });
+  const [editingMovie, setEditingMovie] = useState(null);
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -31,9 +32,19 @@ const MovieContainer = () => {
 
   const handleAddMovie = async () => {
     try {
-      const createdMovie = await createMovie(newMovie);
-      setMovies([...movies, createdMovie]);
-      setShowModal(false);
+      if (editingMovie) {
+        const updatedMovies = movies.map((movie) =>
+          movie.id === editingMovie.id
+            ? { ...editingMovie, ...newMovie }
+            : movie
+        );
+        setMovies(updatedMovies);
+        setEditingMovie(null);
+      } else {
+        const createdMovie = await createMovie(newMovie);
+        setMovies([...movies, createdMovie]);
+        setShowModal(false);
+      }
     } catch (err) {
       setError(err.message);
     }
@@ -42,6 +53,12 @@ const MovieContainer = () => {
       genre: "",
       releaseYear: new Date().getFullYear(),
     });
+  };
+
+  const handleEditMovie = (movie) => {
+    setEditingMovie(movie);
+    setNewMovie(movie);
+    setShowModal(true);
   };
 
   const handleChange = (e) => {
@@ -58,11 +75,13 @@ const MovieContainer = () => {
   return (
     <div>
       <Button onClick={() => setShowModal(true)}>Add Movie</Button>
-      <MovieList movies={movies} />
+      <MovieList movies={movies} onEdit={handleEditMovie} />
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Movie</Modal.Title>
+          <Modal.Title>
+            {editingMovie ? "Edit Movie" : "Add New Movie"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 import PropTypes from "prop-types";
+import { Button } from "react-bootstrap";
 
 const propTypes = {
   movies: PropTypes.arrayOf(
@@ -11,9 +12,10 @@ const propTypes = {
       releaseYear: PropTypes.number.isRequired,
     })
   ).isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
-const MovieList = ({ movies }) => {
+const MovieList = ({ movies, onEdit }) => {
   return (
     <div className="mt-4">
       <Table striped bordered hover responsive>
@@ -23,6 +25,7 @@ const MovieList = ({ movies }) => {
             <th>Name</th>
             <th>Genre</th>
             <th>Release Year</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +35,11 @@ const MovieList = ({ movies }) => {
               <td>{movie.name}</td>
               <td>{movie.genre}</td>
               <td>{movie.releaseYear}</td>
+              <td>
+                <Button variant="primary" onClick={() => onEdit(movie)}>
+                  Edit
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>

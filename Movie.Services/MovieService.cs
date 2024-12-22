@@ -55,6 +55,7 @@ namespace Movies.Services
             if (existingMovie != null)
             {
                 _mapper.Map(movieDto, existingMovie);
+                existingMovie.Id = id;
                 await _repository.UpdateAsync(existingMovie);
             }
         }
