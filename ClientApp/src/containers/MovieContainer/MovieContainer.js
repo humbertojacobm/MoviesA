@@ -13,12 +13,14 @@ const MovieContainer = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newMovie, setNewMovie] = useState({
     name: "",
     genre: "",
     releaseYear: new Date().getFullYear(),
   });
   const [editingMovie, setEditingMovie] = useState(null);
+  const [movieToDelete, setMovieToDelete] = useState(null);
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -67,13 +69,20 @@ const MovieContainer = () => {
     setShowModal(true);
   };
 
-  const handleDeleteMovie = async (movieId) => {
+  const handleDeleteMovie = async () => {
     try {
-      await deleteMovie(movieId);
-      setMovies(movies.filter((movie) => movie.id !== movieId));
+      await deleteMovie(movieToDelete.id);
+      setMovies(movies.filter((movie) => movie.id !== movieToDelete.id));
+      setShowDeleteModal(false);
+      setMovieToDelete(null);
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  const handleShowDeleteModal = (movie) => {
+    setMovieToDelete(movie);
+    setShowDeleteModal(true);
   };
 
   const handleChange = (e) => {
@@ -93,7 +102,7 @@ const MovieContainer = () => {
       <MovieList
         movies={movies}
         onEdit={handleEditMovie}
-        onDelete={handleDeleteMovie}
+        onDelete={handleShowDeleteModal}
       />
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
@@ -139,6 +148,24 @@ const MovieContainer = () => {
           </Button>
           <Button variant="primary" onClick={handleAddMovie}>
             Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete the movie{" "}
+          {movieToDelete && `"${movieToDelete.name}"`}?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDeleteMovie}>
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

@@ -42,7 +42,7 @@ const MovieList = ({ movies, onEdit, onDelete }) => {
                 </Button>
                 <Button
                   variant="danger"
-                  onClick={() => onDelete(movie.id)}
+                  onClick={() => onDelete(movie)}
                   className="ml-2"
                 >
                   Delete
