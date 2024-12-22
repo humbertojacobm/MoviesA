@@ -36,8 +36,8 @@ namespace Movies.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddActor([FromBody] DTOs.Actor actorDto)
         {
-            await _actorService.AddActorAsync(actorDto);
-            return CreatedAtAction(nameof(GetActorById), new { id = actorDto.Name }, actorDto);
+            var addedActor = await _actorService.AddActorAsync(actorDto);
+            return CreatedAtAction(nameof(GetActorById), new { id = addedActor.Id }, addedActor);
         }
 
         [HttpPut("{id}")]

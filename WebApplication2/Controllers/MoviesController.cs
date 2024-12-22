@@ -62,8 +62,8 @@ namespace Movies.WebAPI.Controllers
 
             try
             {
-                await _movieService.AddMovieAsync(movieDto);
-                return CreatedAtAction(nameof(GetMovieById), new { id = movieDto.Name }, movieDto);
+                var addedMovie = await _movieService.AddMovieAsync(movieDto);
+                return CreatedAtAction(nameof(GetMovieById), new { id = addedMovie.Id }, addedMovie);
             }
             catch (Exception ex)
             {

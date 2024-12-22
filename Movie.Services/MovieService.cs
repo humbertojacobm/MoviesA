@@ -39,13 +39,14 @@ namespace Movies.Services
             return _mapper.Map<DTO.Movie>(movie);
         }
 
-        public async Task AddMovieAsync(DTO.Movie movieDto)
+        public async Task<DTO.Movie> AddMovieAsync(DTO.Movie movieDto)
         {
             if (string.IsNullOrWhiteSpace(movieDto.Name))
                 throw new ArgumentException("Movie title cannot be empty.");
 
             var movie = _mapper.Map<Model.Movie>(movieDto);
-            await _repository.AddAsync(movie);
+            var addedMovie = await _repository.AddAsync(movie);
+            return _mapper.Map<DTO.Movie>(addedMovie);
         }
 
         public async Task UpdateMovieAsync(int id, DTO.Movie movieDto)

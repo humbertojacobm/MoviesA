@@ -38,10 +38,14 @@ namespace Movies.Services
             return _mapper.Map<DTO.Actor>(actor);
         }
 
-        public async Task AddActorAsync(DTO.Actor actorDto)
+        public async Task<DTO.Actor> AddActorAsync(DTO.Actor actorDto)
         {
+            if (string.IsNullOrWhiteSpace(actorDto.Name))
+                throw new ArgumentException("Actor name cannot be empty.");
+
             var actor = _mapper.Map<Model.Actor>(actorDto);
-            await _repository.AddAsync(actor);
+            var addedActor = await _repository.AddAsync(actor);
+            return _mapper.Map<DTO.Actor>(addedActor);
         }
 
         public async Task UpdateActorAsync(int id, DTO.Actor actorDto)
