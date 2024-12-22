@@ -31,18 +31,17 @@ const MovieContainer = () => {
 
   const handleAddMovie = async () => {
     try {
-      const nextId =
-        movies.length > 0
-          ? Math.max(...movies.map((movie) => movie.id)) + 1
-          : 1;
-      const movieToCreate = { ...newMovie, id: nextId };
-
-      const createdMovie = await createMovie(movieToCreate);
+      const createdMovie = await createMovie(newMovie);
       setMovies([...movies, createdMovie]);
       setShowModal(false);
     } catch (err) {
       setError(err.message);
     }
+    setNewMovie({
+      name: "",
+      genre: "",
+      releaseYear: new Date().getFullYear(),
+    });
   };
 
   const handleChange = (e) => {
