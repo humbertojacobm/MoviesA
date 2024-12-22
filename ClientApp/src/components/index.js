@@ -6,3 +6,4 @@ export * from "./ShipConfirmation/ShipConfirmation";
 export * from "./Movie/MovieList";
 export * from "./Actor/ActorList";
 export * from "./MovieCreationEditionModal/MovieCreationEditionModal";
+export * from "./DeleteConfirmationModal/DeleteConfirmationModal";

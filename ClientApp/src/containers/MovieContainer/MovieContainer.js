@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { MovieList, MovieCreationEditionModal } from "../../components";
+import {
+  MovieList,
+  MovieCreationEditionModal,
+  DeleteConfirmationModal,
+} from "../../components";
 import {
   fetchMovies,
   createMovie,
@@ -117,21 +121,12 @@ const MovieContainer = () => {
       </Modal>
 
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to delete the movie{" "}
-          {movieToDelete && `"${movieToDelete.name}"`}?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={handleDeleteMovie}>
-            Delete
-          </Button>
-        </Modal.Footer>
+        <DeleteConfirmationModal
+          show={showDeleteModal}
+          onHide={() => setShowDeleteModal(false)}
+          movieToDelete={movieToDelete}
+          handleDelete={handleDeleteMovie}
+        />
       </Modal>
     </div>
   );
