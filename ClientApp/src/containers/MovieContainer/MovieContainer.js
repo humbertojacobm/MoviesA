@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { MovieList } from "../../components";
+import { MovieList, MovieCreationEditionModal } from "../../components";
 import {
   fetchMovies,
   createMovie,
   updateMovie,
   deleteMovie,
 } from "../../apis/moviesApi";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 const MovieContainer = () => {
   const [movies, setMovies] = useState([]);
@@ -106,50 +106,14 @@ const MovieContainer = () => {
       />
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {editingMovie ? "Edit Movie" : "Add New Movie"}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formMovieName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={newMovie.name}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formMovieGenre">
-              <Form.Label>Genre</Form.Label>
-              <Form.Control
-                type="text"
-                name="genre"
-                value={newMovie.genre}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formMovieReleaseYear">
-              <Form.Label>Release Year</Form.Label>
-              <Form.Control
-                type="number"
-                name="releaseYear"
-                value={newMovie.releaseYear}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAddMovie}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        <MovieCreationEditionModal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          editingMovie={editingMovie}
+          newMovie={newMovie}
+          handleChange={handleChange}
+          handleSave={handleAddMovie}
+        />
       </Modal>
 
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
