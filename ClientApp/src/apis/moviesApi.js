@@ -27,3 +27,37 @@ export const createMovie = async (movie) => {
     throw error;
   }
 };
+
+export const updateMovie = async (movie) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/movies/${movie.id}`,
+      movie,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": API_KEY,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating movie:", error);
+    throw error;
+  }
+};
+
+export const deleteMovie = async (movieId) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/movies/${movieId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": API_KEY,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting movies:", error);
+    throw error;
+  }
+};

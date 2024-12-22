@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MovieList } from "../../components";
-import { fetchMovies, createMovie } from "../../apis/moviesApi";
+import { fetchMovies, createMovie, updateMovie } from "../../apis/moviesApi";
 import { Button, Modal, Form } from "react-bootstrap";
 
 const MovieContainer = () => {
@@ -38,13 +38,14 @@ const MovieContainer = () => {
             ? { ...editingMovie, ...newMovie }
             : movie
         );
+        await updateMovie(newMovie);
         setMovies(updatedMovies);
         setEditingMovie(null);
       } else {
         const createdMovie = await createMovie(newMovie);
         setMovies([...movies, createdMovie]);
-        setShowModal(false);
       }
+      setShowModal(false);
     } catch (err) {
       setError(err.message);
     }
