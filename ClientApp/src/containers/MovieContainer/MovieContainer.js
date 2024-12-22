@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { MovieList } from "../../components";
-import { fetchMovies, createMovie, updateMovie } from "../../apis/moviesApi";
+import {
+  fetchMovies,
+  createMovie,
+  updateMovie,
+  deleteMovie,
+} from "../../apis/moviesApi";
 import { Button, Modal, Form } from "react-bootstrap";
 
 const MovieContainer = () => {
@@ -62,6 +67,15 @@ const MovieContainer = () => {
     setShowModal(true);
   };
 
+  const handleDeleteMovie = async (movieId) => {
+    try {
+      await deleteMovie(movieId);
+      setMovies(movies.filter((movie) => movie.id !== movieId));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewMovie((prevMovie) => ({
@@ -76,7 +90,11 @@ const MovieContainer = () => {
   return (
     <div>
       <Button onClick={() => setShowModal(true)}>Add Movie</Button>
-      <MovieList movies={movies} onEdit={handleEditMovie} />
+      <MovieList
+        movies={movies}
+        onEdit={handleEditMovie}
+        onDelete={handleDeleteMovie}
+      />
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>

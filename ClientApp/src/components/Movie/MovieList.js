@@ -13,9 +13,10 @@ const propTypes = {
     })
   ).isRequired,
   onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
-const MovieList = ({ movies, onEdit }) => {
+const MovieList = ({ movies, onEdit, onDelete }) => {
   return (
     <div className="mt-4">
       <Table striped bordered hover responsive>
@@ -38,6 +39,13 @@ const MovieList = ({ movies, onEdit }) => {
               <td>
                 <Button variant="primary" onClick={() => onEdit(movie)}>
                   Edit
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => onDelete(movie.id)}
+                  className="ml-2"
+                >
+                  Delete
                 </Button>
               </td>
             </tr>
